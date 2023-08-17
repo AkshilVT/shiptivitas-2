@@ -1,7 +1,12 @@
 import express from 'express';
 import Database from 'better-sqlite3';
+import cors from 'cors';
 
 const app = express();
+
+app.options('*', cors());
+
+app.use(cors());
 
 app.use(express.json());
 
@@ -181,7 +186,7 @@ app.put('/api/v1/clients/:id', (req, res) => {
       clients = db.prepare('select * from clients').all();
       return res.status(200).send(clients);
     } else {
-      res.status(400).send({ message: 'Priority is required' });
+      return res.status(400).send({ message: 'Priority is required' });
     }
   }
 
